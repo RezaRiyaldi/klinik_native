@@ -3,17 +3,21 @@
 <div class="container">
     <h1 class="text-center my-4">Data Pasien</h1>
 
-    <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        + Pasien
-    </button>
-    <table class="table table-bordered table-hover">
+    <?php if ($_SESSION['userdata']['logged_in']) : ?>
+        <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            + Pasien
+        </button>
+    <?php endif ?>
+    <table class="table table-bordered table-hover" id="example">
         <thead>
             <tr class="text-center">
                 <th>No</th>
                 <th>Nama Pasien</th>
                 <th>Jenis Kelamin</th>
                 <th>Umur</th>
-                <th>Aksi</th>
+                <?php if ($_SESSION['userdata']['logged_in']) : ?>
+                    <th>Aksi</th>
+                <?php endif ?>
             </tr>
         </thead>
 
@@ -32,10 +36,12 @@
                         <td class="align-middle"><?= $pasien['nama_pasien'] ?></td>
                         <td class="text-center align-middle"><?= $pasien['jenis_kelamin'] ?></td>
                         <td class="text-center align-middle"><?= $pasien['umur'] ?></td>
-                        <td class="text-center align-middle">
-                            <a href="edit_pasien.php?id_pasien=<?= $pasien['id_pasien'] ?>" class="btn btn-warning btn-sm">Edit</a>
-                            <a href="__controller.php?id_pasien=<?= $pasien['id_pasien'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda yakin ingin menghapus data pasien <?= $pasien['nama_pasien'] ?> ?')">Hapus</a>
-                        </td>
+                        <?php if ($_SESSION['userdata']['logged_in']) : ?>
+                            <td class="text-center align-middle">
+                                <a href="edit_pasien.php?id_pasien=<?= $pasien['id_pasien'] ?>" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="__controller.php?id_pasien=<?= $pasien['id_pasien'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda yakin ingin menghapus data pasien <?= $pasien['nama_pasien'] ?> ?')">Hapus</a>
+                            </td>
+                        <?php endif ?>
                     </tr>
                 <?php } else { ?>
                     <tr>

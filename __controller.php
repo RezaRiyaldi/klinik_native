@@ -1,8 +1,42 @@
 <?php
 include "__koneksi.php";
 session_start();
+$username_session = $_SESSION['userdata']['username'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    if (isset($_POST["login"])) {
+        $input = (object) $_POST;
+        $sql = "SELECT  * FROM user WHERE username = '$input->username'";
+        $getUser = mysqli_query($koneksi, $sql);
+        $data_user = mysqli_fetch_array($getUser);
+        // var_dump($data_user['nama_lengkap']); die;
+
+        if ($data_user) {
+            if (password_verify($input->password, $data_user['password'])) {
+                $sql = "INSERT INTO log_user (action_by, aktivitas, waktu) VALUES ('$input->username', 'Login aplikasi', NOW())";
+                $query = mysqli_query($koneksi, $sql);
+
+                $data = [
+                    'username' => $data_user['username'],
+                    'nama_lengkap' => $data_user['nama_lengkap'],
+                    'logged_in' => TRUE
+                ];
+
+                $_SESSION['userdata'] = $data;
+                $_SESSION['success'] = 'Login berhasil! Selamat datang ' . $data['username'];
+
+                header('location:index.php');
+                exit;
+            } else {
+                $_SESSION['error'] = 'Password salah!';
+            }
+        } else {
+            $_SESSION['error'] = 'Username tidak ditemukan';
+        }
+
+        header('location:login.php');
+    }
 
     // PASIEN
     if (isset($_POST["tambah_pasien"])) {
@@ -58,27 +92,66 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // USER
     else if (isset($_POST["tambah_user"])) {
         $input = (object) $_POST;
-        $sql = "INSERT INTO user (username, nama_lengkap, password) VALUES ('$input->username', '$input->nama_lengkap', '$input->password')";
 
-        $query = mysqli_query($koneksi, $sql);
-        $_SESSION['success'] = 'Berhasil menambah data User';
+        $username = strtolower($input->username);
+        $nama_lengkap = ucwords(strtolower($input->nama_lengkap));
+        $password = $input->password;
+        $cpassword = $input->cpassword;
+
+        if ($password == $cpassword) {
+            $pass_hash = password_hash($password, PASSWORD_DEFAULT);
+
+            $sql = "INSERT INTO user (username, nama_lengkap, password, added_by) VALUES ('$username', '$nama_lengkap', '$pass_hash', '$username_session')";
+
+            $query = mysqli_query($koneksi, $sql);
+
+            $_SESSION['success'] = 'Berhasil menambah data User';
+        } else {
+            $_SESSION['error'] = 'Gagal menambah data User, konfirmasi password tidak match';
+        }
+
         header('location:user.php');
     } else if (isset($_POST['edit_user'])) {
         $input = (object) $_POST;
-        $sql = "UPDATE user SET username = '$input->username', nama_lengkap = '$input->nama_lengkap'";
-        if ($input->password != NULL) {
-            $sql .= ", password = '$input->password'"; 
+        $id = base64_decode($input->id_user);
+        // var_dump($id); die;
+
+        if ($input->password == $input->cpassword) {
+            $sql = "UPDATE user SET username = '$input->username', nama_lengkap = '$input->nama_lengkap', update_by = '$username_session'";
+
+            if ($input->password != NULL) {
+                $pass = password_hash($input->password, PASSWORD_DEFAULT);
+                $sql .= ", password = '$pass'";
+            }
+
+            $sql .= " WHERE id_user = '$id'";
+
+            $query = mysqli_query($koneksi, $sql);
+            $_SESSION['success'] = 'Berhasil merubah data User';
+        } else {
+            $_SESSION['error'] = 'Gagal merubah data User, konfirmasi password tidak match';
+            header('location:edit_user.php?id_user=' . $input->id_user);
+            exit;
         }
 
-        $sql .= " WHERE id_user = $input->id_user";
-
-        $query = mysqli_query($koneksi, $sql);
-        $_SESSION['success'] = 'Berhasil merubah data User';
         header('location:user.php');
     } // END USER
 
     // DELETE
 } else if ($_SERVER['REQUEST_METHOD'] == "GET") {
+
+    // Logout
+
+    if (isset($_GET['logout'])) {
+        $sql = "INSERT INTO log_user (action_by, aktivitas, waktu) VALUES ('$username_session', 'Logout aplikasi', NOW())";
+        $query = mysqli_query($koneksi, $sql);
+
+        unset($_SESSION['userdata']);
+
+        $_SESSION['success'] = 'Berhasil logout! Semoga harimu menyenangkan';
+
+        header('location:index.php');
+    }
 
     // PASIEN
     if (isset($_GET['id_pasien'])) {
@@ -112,12 +185,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // USER
     else if (isset($_GET['id_user'])) {
-        $id_user = $_GET['id_user'];
+        $id_user = base64_decode($_GET['id_user']);
+
+        $sql = "SELECT  * FROM user WHERE id_user = '$id_user'";
+        $query = mysqli_query($koneksi, $sql);
+        $getUser = mysqli_fetch_array($query);
+        $user = $getUser['username'];
+
+        $sql = "INSERT INTO log_user (action_by, aktivitas, waktu) VALUES ('$username_session', 'Menghapus user dengan username: $user', NOW())";
+        $query = mysqli_query($koneksi, $sql);
+        
         $sql = "DELETE FROM user WHERE id_user = $id_user";
         $query = mysqli_query($koneksi, $sql);
+
 
         $_SESSION['success'] = 'Berhasil menghapus data User';
         header('location:user.php');
     }
-
 }
