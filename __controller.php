@@ -1,7 +1,11 @@
 <?php
 include "__koneksi.php";
 session_start();
-$username_session = $_SESSION['userdata']['username'];
+$username_session = "";
+
+if (isset($_SESSION['userdata']['username'])) {
+    $username_session = $_SESSION['userdata']['username'];
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -26,6 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['userdata'] = $data;
                 $_SESSION['success'] = 'Login berhasil! Selamat datang ' . $data['username'];
 
+                // var_dump($_SESSION['userdata']); die;
                 header('location:index.php');
                 exit;
             } else {

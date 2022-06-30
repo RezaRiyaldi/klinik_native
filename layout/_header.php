@@ -3,6 +3,16 @@ include "__koneksi.php";
 session_start();
 $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 // var_dump($uriSegments);
+
+$logged_in = FALSE;
+$nama_lengkap = "";
+$username = "";
+
+if (isset($_SESSION['userdata'])) {
+    $logged_in = $_SESSION['userdata']['logged_in'];
+    $nama_lengkap = $_SESSION['userdata']['nama_lengkap'];
+    $username = $_SESSION['userdata']['username'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -51,14 +61,14 @@ $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
                     <li class="nav-item">
                         <a class="nav-link <?= $uriSegments[2] == 'user.php' ? 'active' : '' ?>" href="user.php">User</a>
                     </li>
-                    <?php if (!$_SESSION['userdata']['logged_in']) : ?>
+                    <?php if (!$logged_in) : ?>
                         <li class="nav-item">
                             <a class="nav-link btn btn-outline-light text-info" href="login.php">Login</a>
                         </li>
                     <?php else : ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <?= $_SESSION['userdata']['nama_lengkap'] ?>
+                                <?= $nama_lengkap ?>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li>

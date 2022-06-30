@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 28, 2022 at 04:28 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Waktu pembuatan: 30 Jun 2022 pada 11.36
+-- Versi server: 10.4.24-MariaDB
+-- Versi PHP: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `berobat`
+-- Struktur dari tabel `berobat`
 --
 
 CREATE TABLE `berobat` (
@@ -38,7 +38,7 @@ CREATE TABLE `berobat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `berobat`
+-- Dumping data untuk tabel `berobat`
 --
 
 INSERT INTO `berobat` (`id_berobat`, `id_pasien`, `id_dokter`, `tgl_berobat`, `keluhan_pasien`, `hasil_diagnosa`, `penatalaksana`) VALUES
@@ -47,7 +47,7 @@ INSERT INTO `berobat` (`id_berobat`, `id_pasien`, `id_dokter`, `tgl_berobat`, `k
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dokter`
+-- Struktur dari tabel `dokter`
 --
 
 CREATE TABLE `dokter` (
@@ -56,19 +56,20 @@ CREATE TABLE `dokter` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `dokter`
+-- Dumping data untuk tabel `dokter`
 --
 
 INSERT INTO `dokter` (`id_dokter`, `nama_dokter`) VALUES
-(10, 'Bambang'),
-(11, 'Ketut'),
-(12, 'Rudi'),
-(13, 'Septi');
+(10, 'Apri'),
+(11, 'Maya'),
+(12, 'Arta'),
+(13, 'Cantika'),
+(17, 'Herman');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `log_user`
+-- Struktur dari tabel `log_user`
 --
 
 CREATE TABLE `log_user` (
@@ -79,7 +80,7 @@ CREATE TABLE `log_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `log_user`
+-- Dumping data untuk tabel `log_user`
 --
 
 INSERT INTO `log_user` (`id_log`, `action_by`, `aktivitas`, `waktu`) VALUES
@@ -104,12 +105,21 @@ INSERT INTO `log_user` (`id_log`, `action_by`, `aktivitas`, `waktu`) VALUES
 (24, 'admin', 'Logout aplikasi', '2022-06-28 21:26:33'),
 (25, 'admin', 'Login aplikasi', '2022-06-28 21:26:43'),
 (26, 'admin', 'Logout aplikasi', '2022-06-28 21:26:55'),
-(27, 'admin', 'Login aplikasi', '2022-06-28 21:27:08');
+(27, 'admin', 'Login aplikasi', '2022-06-28 21:27:08'),
+(28, 'admin', 'Logout aplikasi', '2022-06-28 21:54:02'),
+(29, '', 'Logout aplikasi', '2022-06-28 22:01:53'),
+(30, 'admin', 'Login aplikasi', '2022-06-28 22:10:25'),
+(31, 'admin', 'Login aplikasi', '2022-06-28 22:11:44'),
+(32, 'admin', 'Login aplikasi', '2022-06-28 22:13:04'),
+(33, 'admin', 'Login aplikasi', '2022-06-28 22:13:09'),
+(34, 'admin', 'Login aplikasi', '2022-06-28 22:13:22'),
+(35, 'admin', 'Login aplikasi', '2022-06-28 22:14:03'),
+(36, 'admin', 'Login aplikasi', '2022-06-30 16:21:06');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `obat`
+-- Struktur dari tabel `obat`
 --
 
 CREATE TABLE `obat` (
@@ -118,18 +128,20 @@ CREATE TABLE `obat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `obat`
+-- Dumping data untuk tabel `obat`
 --
 
 INSERT INTO `obat` (`id_obat`, `nama_obat`) VALUES
-(1, 'Paracetamol'),
-(4, 'Oskadon'),
-(6, 'tes obat');
+(1, 'Paramex'),
+(4, 'Promag'),
+(6, 'Puyer'),
+(7, 'Imodium'),
+(8, 'Bodrex Flu Batuk');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pasien`
+-- Struktur dari tabel `pasien`
 --
 
 CREATE TABLE `pasien` (
@@ -140,20 +152,21 @@ CREATE TABLE `pasien` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `pasien`
+-- Dumping data untuk tabel `pasien`
 --
 
 INSERT INTO `pasien` (`id_pasien`, `nama_pasien`, `jenis_kelamin`, `umur`) VALUES
-(6, 'Ica', 'P', 19),
-(7, 'Asep', 'L', 18),
-(8, 'Agung', 'L', 30),
-(9, 'Andre', 'L', 25);
+(6, 'Malik', 'L', 22),
+(7, 'Mualim', 'L', 19),
+(8, 'Dwi', 'P', 19),
+(9, 'Risa', 'P', 21),
+(17, 'Ekot', 'L', 24);
 
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `pasien_laki`
--- (See below for the actual view)
+-- Stand-in struktur untuk tampilan `pasien_laki`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `pasien_laki` (
 `total_pasien_laki` bigint(21)
@@ -162,8 +175,8 @@ CREATE TABLE `pasien_laki` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `pasien_perempuan`
--- (See below for the actual view)
+-- Stand-in struktur untuk tampilan `pasien_perempuan`
+-- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `pasien_perempuan` (
 `total_pasien_perempuan` bigint(21)
@@ -172,7 +185,7 @@ CREATE TABLE `pasien_perempuan` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `resep_obat`
+-- Struktur dari tabel `resep_obat`
 --
 
 CREATE TABLE `resep_obat` (
@@ -182,7 +195,7 @@ CREATE TABLE `resep_obat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `resep_obat`
+-- Dumping data untuk tabel `resep_obat`
 --
 
 INSERT INTO `resep_obat` (`id_resep`, `id_berobat`, `id_obat`) VALUES
@@ -191,7 +204,7 @@ INSERT INTO `resep_obat` (`id_resep`, `id_berobat`, `id_obat`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
 CREATE TABLE `user` (
@@ -204,14 +217,14 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `user`
+-- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`id_user`, `username`, `password`, `nama_lengkap`, `added_by`, `update_by`) VALUES
 (2, 'admin', '$2y$10$VdQNEygpR/nqhw6F1brd0.oTgvIGM6WEJF4wM1CIr9.p3liJYKQwm', 'admin aja', '', 'rezariy');
 
 --
--- Triggers `user`
+-- Trigger `user`
 --
 DELIMITER $$
 CREATE TRIGGER `add_user` AFTER INSERT ON `user` FOR EACH ROW BEGIN
@@ -231,7 +244,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Structure for view `pasien_laki`
+-- Struktur untuk view `pasien_laki`
 --
 DROP TABLE IF EXISTS `pasien_laki`;
 
@@ -240,7 +253,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Structure for view `pasien_perempuan`
+-- Struktur untuk view `pasien_perempuan`
 --
 DROP TABLE IF EXISTS `pasien_perempuan`;
 
@@ -251,7 +264,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 
 --
--- Indexes for table `berobat`
+-- Indeks untuk tabel `berobat`
 --
 ALTER TABLE `berobat`
   ADD PRIMARY KEY (`id_berobat`),
@@ -259,32 +272,32 @@ ALTER TABLE `berobat`
   ADD KEY `id_dokter` (`id_dokter`);
 
 --
--- Indexes for table `dokter`
+-- Indeks untuk tabel `dokter`
 --
 ALTER TABLE `dokter`
   ADD PRIMARY KEY (`id_dokter`);
 
 --
--- Indexes for table `log_user`
+-- Indeks untuk tabel `log_user`
 --
 ALTER TABLE `log_user`
   ADD PRIMARY KEY (`id_log`),
   ADD KEY `user_id` (`action_by`);
 
 --
--- Indexes for table `obat`
+-- Indeks untuk tabel `obat`
 --
 ALTER TABLE `obat`
   ADD PRIMARY KEY (`id_obat`);
 
 --
--- Indexes for table `pasien`
+-- Indeks untuk tabel `pasien`
 --
 ALTER TABLE `pasien`
   ADD PRIMARY KEY (`id_pasien`);
 
 --
--- Indexes for table `resep_obat`
+-- Indeks untuk tabel `resep_obat`
 --
 ALTER TABLE `resep_obat`
   ADD PRIMARY KEY (`id_resep`),
@@ -292,7 +305,7 @@ ALTER TABLE `resep_obat`
   ADD KEY `id_berobat` (`id_berobat`);
 
 --
--- Indexes for table `user`
+-- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`),
@@ -300,64 +313,64 @@ ALTER TABLE `user`
   ADD KEY `update_by` (`update_by`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `berobat`
+-- AUTO_INCREMENT untuk tabel `berobat`
 --
 ALTER TABLE `berobat`
   MODIFY `id_berobat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `dokter`
+-- AUTO_INCREMENT untuk tabel `dokter`
 --
 ALTER TABLE `dokter`
-  MODIFY `id_dokter` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_dokter` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `log_user`
+-- AUTO_INCREMENT untuk tabel `log_user`
 --
 ALTER TABLE `log_user`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
--- AUTO_INCREMENT for table `obat`
+-- AUTO_INCREMENT untuk tabel `obat`
 --
 ALTER TABLE `obat`
-  MODIFY `id_obat` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_obat` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `pasien`
+-- AUTO_INCREMENT untuk tabel `pasien`
 --
 ALTER TABLE `pasien`
-  MODIFY `id_pasien` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_pasien` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `resep_obat`
+-- AUTO_INCREMENT untuk tabel `resep_obat`
 --
 ALTER TABLE `resep_obat`
   MODIFY `id_resep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
   MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `berobat`
+-- Ketidakleluasaan untuk tabel `berobat`
 --
 ALTER TABLE `berobat`
   ADD CONSTRAINT `berobat_FK` FOREIGN KEY (`id_dokter`) REFERENCES `dokter` (`id_dokter`) ON DELETE SET NULL,
   ADD CONSTRAINT `berobat_FK_1` FOREIGN KEY (`id_pasien`) REFERENCES `pasien` (`id_pasien`) ON DELETE SET NULL;
 
 --
--- Constraints for table `resep_obat`
+-- Ketidakleluasaan untuk tabel `resep_obat`
 --
 ALTER TABLE `resep_obat`
   ADD CONSTRAINT `FK_resep_obat_obat` FOREIGN KEY (`id_obat`) REFERENCES `obat` (`id_obat`) ON DELETE SET NULL,

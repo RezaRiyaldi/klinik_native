@@ -27,11 +27,11 @@ while ($data_user = mysqli_fetch_array($query)) {
                         <div class="alert alert-warning text-center">Isi password apa bila ingin mengganti password</div>
 
                         <div class="row">
-                            <div class="col mb-3">
+                            <div class="col-md-6 mb-3">
                                 <label for="" class="form-label">Password</label>
                                 <input type="password" name="password" class="form-control" placeholder="Masukan password">
                             </div>
-                            <div class="col mb-3">
+                            <div class="col-md-6 mb-3">
                                 <label for="" class="form-label">Konfirmasi Password</label>
                                 <input type="password" name="cpassword" class="form-control" placeholder="Konfirmasi password">
                             </div>

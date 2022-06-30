@@ -3,43 +3,45 @@
 <div class="container">
     <h1 class="text-center my-4">Data Dokter</h1>
 
-    <?php if ($_SESSION['userdata']['logged_in']) : ?>
+    <?php if ($logged_in) : ?>
         <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
             + Dokter
         </button>
     <?php endif ?>
-    <table class="table table-bordered table-hover" id="example">
-        <thead>
-            <tr class="text-center">
-                <th>No</th>
-                <th>Nama Dokter</th>
-                <?php if ($_SESSION['userdata']['logged_in']) : ?>
-                    <th>Aksi</th>
-                <?php endif ?>
-            </tr>
-        </thead>
-
-        <tbody>
-            <?php
-            $no = 1;
-            $query = "SELECT * FROM dokter";
-            $sql = mysqli_query($koneksi, $query);
-
-            while ($dokter = mysqli_fetch_array($sql)) {
-            ?>
-                <tr>
-                    <td class="text-center align-middle"><?= $no++ ?></td>
-                    <td class="align-middle"><?= $dokter['nama_dokter'] ?></td>
-                    <?php if ($_SESSION['userdata']['logged_in']) : ?>
-                        <td class="text-center align-middle">
-                            <a href="edit_dokter.php?id_dokter=<?= $dokter['id_dokter'] ?>" class="btn btn-warning btn-sm">Edit</a>
-                            <a href="__controller.php?id_dokter=<?= $dokter['id_dokter'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda yakin ingin menghapus data dokter <?= $dokter['nama_dokter'] ?> ?')">Hapus</a>
-                        </td>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover nowrap" id="example">
+            <thead>
+                <tr class="text-center">
+                    <th>No</th>
+                    <th>Nama Dokter</th>
+                    <?php if ($logged_in) : ?>
+                        <th>Aksi</th>
                     <?php endif ?>
                 </tr>
-            <?php } ?>
-        </tbody>
-    </table>
+            </thead>
+
+            <tbody>
+                <?php
+                $no = 1;
+                $query = "SELECT * FROM dokter";
+                $sql = mysqli_query($koneksi, $query);
+
+                while ($dokter = mysqli_fetch_array($sql)) {
+                ?>
+                    <tr>
+                        <td class="text-center align-middle"><?= $no++ ?></td>
+                        <td class="align-middle"><?= $dokter['nama_dokter'] ?></td>
+                        <?php if ($logged_in) : ?>
+                            <td class="text-center align-middle">
+                                <a href="edit_dokter.php?id_dokter=<?= $dokter['id_dokter'] ?>" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="__controller.php?id_dokter=<?= $dokter['id_dokter'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda yakin ingin menghapus data dokter <?= $dokter['nama_dokter'] ?> ?')">Hapus</a>
+                            </td>
+                        <?php endif ?>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <!-- Modal -->
